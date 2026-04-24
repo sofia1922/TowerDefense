@@ -40,6 +40,13 @@ public class WaveSpawner : MonoBehaviour
         }
     }
 
+    // GameManager викликає це, щоб дізнатися, чи всі вороги з хвилі відправлені
+    public bool IsWaveComplete()
+        {
+            // Припускаємо, що хвиля закінчилася, коли бюджет витрачено
+            return currentWaveBudget <= 10; 
+        }
+
     void SpawnEnemy(EnemyData data)
     {
         GameObject newEnemy = Instantiate(enemyPrefab, waypoints[0].position, Quaternion.identity);
