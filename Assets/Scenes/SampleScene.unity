@@ -4752,7 +4752,6 @@ GameObject:
   - component: {fileID: 529354207}
   - component: {fileID: 529354209}
   - component: {fileID: 529354208}
-  - component: {fileID: 529354210}
   m_Layer: 5
   m_Name: MainMenuPanel
   m_TagString: Untagged
@@ -4820,20 +4819,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 529354206}
   m_CullTransparentMesh: 1
---- !u!114 &529354210
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 529354206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e10b4ada06358e24ba7e03a6ca3ed6eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainMenuPanel: {fileID: 529354206}
-  gameHUD: {fileID: 0}
 --- !u!1 &529697054
 GameObject:
   m_ObjectHideFlags: 0
@@ -5252,7 +5237,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 570863753}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1934176030}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: QuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &570863753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6162,6 +6159,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1453875903}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &697377451
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 697377452}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &697377452
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 697377451}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1111688966}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &697623931
 GameObject:
   m_ObjectHideFlags: 0
@@ -6833,9 +6861,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: e10b4ada06358e24ba7e03a6ca3ed6eb, type: 3}
-        m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
-        m_MethodName: 
+      - m_Target: {fileID: 1934176030}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: StartPvEGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8654,6 +8682,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   damageSlider: {fileID: 1270098456}
+--- !u!114 &1111688973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111688964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53c872b828a882e479a699400bbde79c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 9
+  damage: 50
+  fireRate: 5
+  bulletPrefab: {fileID: 3599610803488732043, guid: 265a7413ed330314da7afe19e9150a28, type: 3}
 --- !u!1 &1130252375
 GameObject:
   m_ObjectHideFlags: 0
@@ -14503,6 +14547,7 @@ GameObject:
   - component: {fileID: 1934176028}
   - component: {fileID: 1934176027}
   - component: {fileID: 1934176026}
+  - component: {fileID: 1934176030}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -14593,6 +14638,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1934176030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934176025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e10b4ada06358e24ba7e03a6ca3ed6eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMenuPanel: {fileID: 529354206}
+  gameHUD: {fileID: 0}
 --- !u!1 &1955036208
 GameObject:
   m_ObjectHideFlags: 0
@@ -15763,6 +15822,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4116873157601364265, guid: d2e030588e871ad44ac9ae1082be3a24, type: 3}
       insertIndex: -1
       addedObject: {fileID: 127268916}
+    - targetCorrespondingSourceObject: {fileID: 4116873157601364265, guid: d2e030588e871ad44ac9ae1082be3a24, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 697377452}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1375384095458328634, guid: d2e030588e871ad44ac9ae1082be3a24, type: 3}
       insertIndex: -1
@@ -15770,6 +15832,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1375384095458328634, guid: d2e030588e871ad44ac9ae1082be3a24, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1111688970}
+    - targetCorrespondingSourceObject: {fileID: 1375384095458328634, guid: d2e030588e871ad44ac9ae1082be3a24, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1111688973}
   m_SourcePrefab: {fileID: 100100000, guid: d2e030588e871ad44ac9ae1082be3a24, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
