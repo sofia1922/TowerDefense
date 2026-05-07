@@ -19,7 +19,6 @@ public class MainMenuController : MonoBehaviour
     {
         Debug.Log("Запуск режиму: PvE (Захисник vs ШІ)");
         LaunchGame();
-        [cite_start]// Тут можна додати специфічну логіку для ШІ-атакуючого [cite: 16]
     }
 
     // Режим Гравець проти Гравця (Бонусні бали)
@@ -27,7 +26,6 @@ public class MainMenuController : MonoBehaviour
     {
         Debug.Log("Запуск режиму: PvP (Hot-seat)");
         LaunchGame();
-        [cite_start]// Тут можна додати логіку для другого гравця-атакуючого [cite: 12]
     }
 
     private void LaunchGame()
