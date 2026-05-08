@@ -1,46 +1,75 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // ОБОВ'ЯЗКОВО: дозволяє перезавантажувати рівень
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [Header("Налаштування об'єктів")]
-    public BaseHealth baseHealth;  // Сюди тягнемо об'єкт Base
-    public GameObject gameOverUI;  // Сюди тягнемо GameOverPanel
+    public BaseHealth baseHealth;
+    public GameObject gameOverUI;
+
+    [Header("Win")]
+    public GameObject winUI;
 
     private bool isGameOver = false;
 
     void Update()
     {
-        // Якщо гра вже закінчена, нічого не робимо
         if (isGameOver) return;
 
-        // Перевіряємо, чи здоров'я бази впало до нуля
+        // ПРОГРАШ
         if (baseHealth != null && baseHealth.GetCurrentHealth() <= 0)
         {
             ShowGameOver();
+            return;
+        }
+
+        // ПЕРЕМОГА
+        CheckWinCondition();
+    }
+
+    void CheckWinCondition()
+    {
+        WaveSpawner spawner = FindObjectOfType<WaveSpawner>();
+
+        if (spawner == null) return;
+
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        // Якщо хвиля закінчена і ворогів нема
+        if (spawner.IsWaveComplete() && enemies.Length == 0)
+        {
+            ShowWin();
         }
     }
 
     void ShowGameOver()
     {
         isGameOver = true;
-        
+
         if (gameOverUI != null)
         {
-            gameOverUI.SetActive(true); // Вмикаємо панель програшу
+            gameOverUI.SetActive(true);
         }
 
-        Time.timeScale = 0f; // Ставимо гру на паузу
+        Time.timeScale = 0f;
     }
 
-    // Цей метод МАЄ бути public, щоб кнопка його знайшла
+    void ShowWin()
+    {
+        isGameOver = true;
+
+        if (winUI != null)
+        {
+            winUI.SetActive(true);
+        }
+
+        Time.timeScale = 0f;
+    }
+
     public void RestartGame()
     {
-        Debug.Log("Перезапуск гри...");
-        
-        Time.timeScale = 1f; // ВАЖЛИВО: повертаємо час у норму, інакше нова гра буде на паузі
-        
-        // Завантажуємо поточну сцену заново
+        Time.timeScale = 1f;
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

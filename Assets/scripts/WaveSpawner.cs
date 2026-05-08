@@ -1,15 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
 {
-    public Transform[] waypoints; 
+    public Transform[] waypoints;
 
     public EnemyData[] enemyTypes;
     public GameObject enemyPrefab;
     public int currentWaveBudget = 200;
     public float spawnInterval = 1.0f;
+
+    private bool waveSpawnFinished = false;
 
     void Start()
     {
@@ -20,6 +21,7 @@ public class WaveSpawner : MonoBehaviour
     {
         if (waypoints.Length > 0 && enemyTypes.Length > 0)
         {
+            waveSpawnFinished = false;
             StartCoroutine(SpawnWaveRoutine());
         }
     }
@@ -27,30 +29,39 @@ public class WaveSpawner : MonoBehaviour
     IEnumerator SpawnWaveRoutine()
     {
         int remainingBudget = currentWaveBudget;
+
         while (remainingBudget >= 10)
         {
             EnemyData randomEnemy = enemyTypes[Random.Range(0, enemyTypes.Length)];
+
             if (remainingBudget >= randomEnemy.attackCost)
             {
                 SpawnEnemy(randomEnemy);
                 remainingBudget -= randomEnemy.attackCost;
                 yield return new WaitForSeconds(Random.Range(0.8f, 1.2f));
             }
-            else yield return null;
+            else
+            {
+                break;
+            }
         }
+
+        waveSpawnFinished = true;
     }
 
-    // GameManager викликає це, щоб дізнатися, чи всі вороги з хвилі відправлені
     public bool IsWaveComplete()
-        {
-            // Припускаємо, що хвиля закінчилася, коли бюджет витрачено
-            return currentWaveBudget <= 10; 
-        }
+    {
+        return waveSpawnFinished;
+    }
 
     void SpawnEnemy(EnemyData data)
     {
         GameObject newEnemy = Instantiate(enemyPrefab, waypoints[0].position, Quaternion.identity);
+
         Enemy enemyScript = newEnemy.GetComponent<Enemy>();
-        if (enemyScript != null) enemyScript.Initialize(data, waypoints);
+        if (enemyScript != null)
+        {
+            enemyScript.Initialize(data, waypoints);
+        }
     }
-} 
+}
