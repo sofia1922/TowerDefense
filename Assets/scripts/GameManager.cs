@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,21 +11,42 @@ public class GameManager : MonoBehaviour
     [Header("Win")]
     public GameObject winUI;
 
+    [Header("Gold")]
+    public int currentGold = 100;
+    public TMP_Text goldText;
+
     private bool isGameOver = false;
+
+    void Start()
+    {
+        UpdateGoldUI();
+    }
 
     void Update()
     {
         if (isGameOver) return;
 
-        // ПРОГРАШ
         if (baseHealth != null && baseHealth.GetCurrentHealth() <= 0)
         {
             ShowGameOver();
             return;
         }
 
-        // ПЕРЕМОГА
         CheckWinCondition();
+    }
+
+    public void AddGold(int amount)
+    {
+        currentGold += amount;
+        UpdateGoldUI();
+    }
+
+    void UpdateGoldUI()
+    {
+        if (goldText != null)
+        {
+            goldText.text = "Gold: " + currentGold;
+        }
     }
 
     void CheckWinCondition()
@@ -35,7 +57,6 @@ public class GameManager : MonoBehaviour
 
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-        // Якщо хвиля закінчена і ворогів нема
         if (spawner.IsWaveComplete() && enemies.Length == 0)
         {
             ShowWin();
@@ -69,7 +90,6 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         Time.timeScale = 1f;
-
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

@@ -5,9 +5,9 @@ public class Bullet : MonoBehaviour
     public float speed = 10f;
 
     private Enemy target;
-    private float damage;
+    private int damage;
 
-    public void SetTarget(Enemy enemy, float bulletDamage)
+    public void SetTarget(Enemy enemy, int bulletDamage)
     {
         target = enemy;
         damage = bulletDamage;

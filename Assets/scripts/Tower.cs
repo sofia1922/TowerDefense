@@ -4,12 +4,15 @@ public class Tower : MonoBehaviour
 {
     [Header("Tower Settings")]
     public float range = 9f;
-    public int damage = 50;
-    public float fireRate = 5f;
+    public int damage = 10;
+    public float fireRate = 2f;
 
     [Header("Bullet Settings")]
     public GameObject bulletPrefab;
     public Transform firePoint;
+
+    [Header("Sound")]
+    public AudioClip shootSound;
 
     private float fireCooldown = 0f;
 
@@ -62,6 +65,11 @@ public class Tower : MonoBehaviour
             if (bullet != null)
             {
                 bullet.SetTarget(target, damage);
+            }
+
+            if (shootSound != null)
+            {
+                AudioSource.PlayClipAtPoint(shootSound, transform.position);
             }
         }
     }

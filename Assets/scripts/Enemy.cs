@@ -11,6 +11,18 @@ public class Enemy : MonoBehaviour
     [Header("Health Bar")]
     public Transform hpBarFill;
 
+
+    private AudioSource audioSource;
+
+    private GameManager gameManager;
+
+    void Start()
+    {
+        gameManager = FindObjectOfType<GameManager>();
+
+        audioSource = GetComponent<AudioSource>();
+    }
+
     public void Initialize(EnemyData newData, Transform[] waypoints)
     {
         data = newData;
@@ -57,8 +69,27 @@ public class Enemy : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    void Die()
+    {
+        GameManager gm = FindObjectOfType<GameManager>();
+
+        if (gm != null && data != null)
+        {
+            gm.AddGold(data.rewardGold);
+            Debug.Log("Enemy killed. Added gold: " + data.rewardGold);
+        }
+
+        // Відтворення звуку
+        if (data != null && data.deathSound != null)
+        {
+            AudioSource.PlayClipAtPoint(data.deathSound, transform.position);
+        }
+
+        Destroy(gameObject);
     }
 
     void UpdateHealthBar()

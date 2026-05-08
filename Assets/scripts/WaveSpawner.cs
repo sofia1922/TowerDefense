@@ -1,34 +1,69 @@
 using System.Collections;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class WaveSpawner : MonoBehaviour
 {
+    [Header("Path")]
     public Transform[] waypoints;
 
+    [Header("Enemy")]
     public EnemyData[] enemyTypes;
     public GameObject enemyPrefab;
-    public int currentWaveBudget = 200;
-    public float spawnInterval = 1.0f;
 
-    private bool waveSpawnFinished = false;
+    [Header("Wave Settings")]
+    public int maxWaves = 5;
+    public int startWaveBudget = 80;
+    public int budgetIncreasePerWave = 50;
+    public float spawnIntervalMin = 0.8f;
+    public float spawnIntervalMax = 1.2f;
+    public float timeBetweenWaves = 3f;
+
+    [Header("UI")]
+    public TMP_Text waveText;
+    public CanvasGroup waveCanvasGroup;
+
+    private int currentWave = 0;
+    private bool allWavesFinished = false;
 
     void Start()
     {
-        StartWave();
+        if (waveText != null)
+            waveText.gameObject.SetActive(false);
+
+        if (waveCanvasGroup != null)
+            waveCanvasGroup.alpha = 0f;
+
+        StartCoroutine(WaveLoop());
     }
 
-    public void StartWave()
+    IEnumerator WaveLoop()
     {
-        if (waypoints.Length > 0 && enemyTypes.Length > 0)
+        while (currentWave < maxWaves)
         {
-            waveSpawnFinished = false;
-            StartCoroutine(SpawnWaveRoutine());
+            currentWave++;
+
+            yield return StartCoroutine(ShowWaveText());
+
+            int waveBudget = startWaveBudget + (currentWave - 1) * budgetIncreasePerWave;
+
+            yield return StartCoroutine(SpawnWaveRoutine(waveBudget));
+
+            yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("Enemy").Length == 0);
+
+            if (currentWave < maxWaves)
+            {
+                yield return new WaitForSeconds(timeBetweenWaves);
+            }
         }
+
+        allWavesFinished = true;
     }
 
-    IEnumerator SpawnWaveRoutine()
+    IEnumerator SpawnWaveRoutine(int budget)
     {
-        int remainingBudget = currentWaveBudget;
+        int remainingBudget = budget;
 
         while (remainingBudget >= 10)
         {
@@ -38,20 +73,19 @@ public class WaveSpawner : MonoBehaviour
             {
                 SpawnEnemy(randomEnemy);
                 remainingBudget -= randomEnemy.attackCost;
-                yield return new WaitForSeconds(Random.Range(0.8f, 1.2f));
+
+                yield return new WaitForSeconds(Random.Range(spawnIntervalMin, spawnIntervalMax));
             }
             else
             {
                 break;
             }
         }
-
-        waveSpawnFinished = true;
     }
 
     public bool IsWaveComplete()
     {
-        return waveSpawnFinished;
+        return allWavesFinished && GameObject.FindGameObjectsWithTag("Enemy").Length == 0;
     }
 
     void SpawnEnemy(EnemyData data)
@@ -59,9 +93,42 @@ public class WaveSpawner : MonoBehaviour
         GameObject newEnemy = Instantiate(enemyPrefab, waypoints[0].position, Quaternion.identity);
 
         Enemy enemyScript = newEnemy.GetComponent<Enemy>();
+
         if (enemyScript != null)
         {
             enemyScript.Initialize(data, waypoints);
         }
+    }
+
+    IEnumerator ShowWaveText()
+    {
+        if (waveText == null || waveCanvasGroup == null)
+            yield break;
+
+        waveText.gameObject.SetActive(true);
+        waveText.text = "WAVE " + currentWave;
+
+        float time = 0f;
+
+        while (time < 1f)
+        {
+            time += Time.deltaTime;
+            waveCanvasGroup.alpha = Mathf.Lerp(0f, 1f, time);
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(3f);
+
+        time = 0f;
+
+        while (time < 1f)
+        {
+            time += Time.deltaTime;
+            waveCanvasGroup.alpha = Mathf.Lerp(1f, 0f, time);
+            yield return null;
+        }
+
+        waveCanvasGroup.alpha = 0f;
+        waveText.gameObject.SetActive(false);
     }
 }
