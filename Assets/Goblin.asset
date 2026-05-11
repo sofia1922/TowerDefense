@@ -15,6 +15,7 @@ MonoBehaviour:
   enemyName: Goblin
   health: 80
   speed: 2
-  rewardGold: 0
+  rewardGold: 15
   attackCost: 20
   visualSprite: {fileID: 294089629135204737, guid: a22685f337eca7e44bb09d1c809c50fb, type: 3}
+  deathSound: {fileID: 8300000, guid: 7ad435c72edd26b4198859a36f33eed3, type: 3}

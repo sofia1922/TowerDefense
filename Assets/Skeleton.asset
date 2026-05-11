@@ -15,6 +15,7 @@ MonoBehaviour:
   enemyName: Skeleton
   health: 50
   speed: 1.5
-  rewardGold: 0
+  rewardGold: 10
   attackCost: 15
   visualSprite: {fileID: -4862099040945478516, guid: a3779e50bc9323e41946f7b5517235c6, type: 3}
+  deathSound: {fileID: 8300000, guid: cc953af2434480743bde40737abb9469, type: 3}
