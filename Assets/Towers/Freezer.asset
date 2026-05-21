@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9463eac432f872f4988359844a5b6a33, type: 3}
+  m_Name: Freezer
+  m_EditorClassIdentifier: 
+  towerName: Freezer
+  towerIcon: {fileID: 0}
+  attackSpeed: 1.2
+  attackRange: 4
+  cost: 120
+  damage: 0
+  isAoE: 0
+  slowAmount: 0.5
