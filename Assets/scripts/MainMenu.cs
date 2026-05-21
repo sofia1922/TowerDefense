@@ -3,22 +3,6 @@ using UnityEngine;
 public class MainMenuController : MonoBehaviour
 {
     [Header("UI Панелі")]
-<<<<<<< HEAD
-    public GameObject mainMenuPanel;
-    public GameObject gameHUD;
-
-    void Awake()
-    {
-        Time.timeScale = 0f;
-
-        if (mainMenuPanel != null)
-            mainMenuPanel.SetActive(true);
-
-        if (gameHUD != null)
-            gameHUD.SetActive(false);
-    }
-
-=======
     public GameObject mainMenuPanel; // Головна панель меню
     public GameObject gameHUD;       // Інтерфейс гри (HP, Золото)
 
@@ -31,52 +15,25 @@ public class MainMenuController : MonoBehaviour
     }
 
     // Режим Гравець проти Комп'ютера (Обов'язково)
->>>>>>> 6233c5f4735fd79c7a5d4e067bdbff7ccd940b41
     public void StartPvEGame()
     {
         Debug.Log("Запуск режиму: PvE (Захисник vs ШІ)");
         LaunchGame();
-<<<<<<< HEAD
-    }
-
-=======
-        [cite_start]// Тут можна додати специфічну логіку для ШІ-атакуючого [cite: 16]
     }
 
     // Режим Гравець проти Гравця (Бонусні бали)
->>>>>>> 6233c5f4735fd79c7a5d4e067bdbff7ccd940b41
     public void StartPvPGame()
     {
         Debug.Log("Запуск режиму: PvP (Hot-seat)");
         LaunchGame();
-<<<<<<< HEAD
-=======
-        [cite_start]// Тут можна додати логіку для другого гравця-атакуючого [cite: 12]
->>>>>>> 6233c5f4735fd79c7a5d4e067bdbff7ccd940b41
     }
 
     private void LaunchGame()
     {
-<<<<<<< HEAD
-        if (mainMenuPanel != null)
-            mainMenuPanel.SetActive(false);
-
-        if (gameHUD != null)
-            gameHUD.SetActive(true);
-
-        MusicManager musicManager = FindObjectOfType<MusicManager>();
-
-        if (musicManager != null)
-        {
-            musicManager.SetGameVolume();
-        }
-
-        Time.timeScale = 1f;
-=======
-        mainMenuPanel.SetActive(false);
+        if (mainMenuPanel != null) mainMenuPanel.SetActive(false);
         if (gameHUD != null) gameHUD.SetActive(true);
+        
         Time.timeScale = 1f; // Запуск ігрового часу
->>>>>>> 6233c5f4735fd79c7a5d4e067bdbff7ccd940b41
     }
 
     public void QuitGame()

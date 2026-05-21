@@ -37,6 +37,7 @@ public class BaseHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+<<<<<<< HEAD
             GameOver(); 
         }
     }
@@ -45,6 +46,17 @@ public class BaseHealth : MonoBehaviour
     {
         Debug.Log("БАЗУ ЗРУЙНОВАНО!");
         // Time.timeScale = 0; // 
+=======
+            GameOver(); // Тут виникала помилка, бо метод нижче був відсутній
+        }
+    }
+
+    // Цей блок має бути ТУТ (всередині класу)
+    void GameOver()
+    {
+        Debug.Log("БАЗУ ЗРУЙНОВАНО!");
+        // Time.timeScale = 0; // Ми це закоментували, щоб гра не висла
+>>>>>>> 6233c5f4735fd79c7a5d4e067bdbff7ccd940b41
     }
 
     public int GetCurrentHealth()
